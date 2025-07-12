@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Idea Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown Parser -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,6 +18,44 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        /* Styles for rendered markdown content inside the card */
+        .idea-card-content {
+            width: 100%; /* Ensure content uses full card width */
+        }
+        .idea-card-content h1, .idea-card-content h2, .idea-card-content h3 {
+            font-weight: bold;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .idea-card-content h1 { font-size: 1.5em; }
+        .idea-card-content h2 { font-size: 1.25em; }
+        .idea-card-content h3 { font-size: 1.1em; }
+        .idea-card-content p { margin-bottom: 0.5rem; word-wrap: break-word; }
+        .idea-card-content ul, .idea-card-content ol {
+            list-style-position: inside;
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .idea-card-content ul { list-style-type: disc; }
+        .idea-card-content ol { list-style-type: decimal; }
+        .idea-card-content strong { font-weight: bold; }
+        .idea-card-content em { font-style: italic; }
+        /* Styling for code blocks */
+        .idea-card-content pre {
+            background-color: #f3f4f6; /* gray-100 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto; /* Add scrollbar if still needed, but wrap should handle most cases */
+        }
+        .idea-card-content code {
+            font-family: monospace;
+            white-space: pre-wrap;   /* Crucial for wrapping code */
+            word-break: break-all; /* Breaks long strings/words */
+        }
+
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -283,7 +322,7 @@
          * @returns {Promise<string|null>} The generated idea text, or null on error.
          */
         async function generateIdea(topic, randomWords, apiKey) {
-            const prompt = `Please generate a creative idea related to "${topic}" that incorporates the following three random words: "${randomWords.join(', ')}". Use these words as inspiration to come up with an innovative and out-of-the-box solution, concept, or idea. Present the idea clearly and concisely.`;
+            const prompt = `Please generate a creative idea related to "${topic}" that incorporates the following three random words: "${randomWords.join(', ')}". Use these words as inspiration to come up with an innovative and out-of-the-box solution, concept, or idea. Present the idea clearly and concisely. Use Markdown for formatting like lists or bold text where appropriate.`;
 
             const payload = {
                 contents: [{
@@ -382,12 +421,15 @@
         function createIdeaCard(words, ideaText) {
             const card = document.createElement('div');
             card.className = 'idea-card bg-white p-6 rounded-xl shadow-md border border-gray-200';
-            const formattedIdea = ideaText.trim().replace(/\n/g, '<br>');
+
+            // Use the 'marked' library to parse Markdown into HTML
+            const formattedIdea = marked.parse(ideaText.trim());
+
             card.innerHTML = `
                 <div class="flex flex-wrap items-center mb-4">
                     ${words.map(word => `<span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${word}</span>`).join('')}
                 </div>
-                <p class="text-gray-700 leading-relaxed">${formattedIdea}</p>
+                <div class="idea-card-content text-gray-700 leading-relaxed">${formattedIdea}</div>
             `;
             return card;
         }
