@@ -98,29 +98,76 @@
         const loader = document.getElementById('loader');
         const messageBox = document.getElementById('messageBox');
 
-        // --- Word List ---
+        // --- Word List (Expanded) ---
         const wordList = [
-            "river", "mountain", "cloud", "ocean", "forest", "desert", "meadow", "flower", "tree", "stone",
-            "sun", "moon", "star", "galaxy", "comet", "planet", "nebula", "constellation", "eclipse", "aurora",
-            "key", "door", "lock", "window", "mirror", "bridge", "path", "gate", "wall", "staircase",
-            "book", "pen", "ink", "paper", "scroll", "map", "compass", "clock", "calendar", "hourglass",
-            "music", "song", "dance", "rhythm", "melody", "harmony", "symphony", "opera", "choir", "instrument",
-            "color", "light", "shadow", "reflection", "spectrum", "prism", "hue", "shade", "tint", "palette",
-            "dream", "memory", "thought", "idea", "vision", "imagination", "fantasy", "reality", "illusion", "whisper",
-            "fire", "water", "earth", "air", "wind", "rain", "snow", "storm", "thunder", "lightning",
-            "seed", "sprout", "root", "leaf", "branch", "fruit", "blossom", "pollen", "nectar", "thorn",
-            "crystal", "gem", "diamond", "ruby", "sapphire", "emerald", "amethyst", "quartz", "obsidian", "geode",
-            "echo", "silence", "voice", "sound", "noise", "murmur", "scream", "laugh", "cry", "hum",
-            "journey", "quest", "adventure", "pilgrimage", "voyage", "expedition", "exploration", "discovery", "odyssey", "saga",
-            "mask", "costume", "disguise", "veil", "cloak", "robe", "crown", "scepter", "throne", "shield",
-            "puzzle", "riddle", "enigma", "mystery", "secret", "clue", "code", "cipher", "labyrinth", "maze",
-            "alchemy", "magic", "spell", "potion", "charm", "curse", "prophecy", "oracle", "ritual", "talisman",
-            "silk", "velvet", "wool", "cotton", "linen", "lace", "embroidery", "tapestry", "quilt", "yarn",
-            "breeze", "gale", "whirlwind", "cyclone", "typhoon", "hurricane", "tornado", "monsoon", "zephyr", "mistral",
-            "castle", "tower", "fortress", "dungeon", "palace", "temple", "shrine", "monastery", "cathedral", "ruin",
-            "ship", "boat", "vessel", "raft", "canoe", "submarine", "galleon", "schooner", "yacht", "dinghy",
-            "feather", "wing", "beak", "talon", "claw", "fin", "scale", "shell", "fur", "fang",
-            "automation", "network", "pixel", "algorithm", "data", "interface", "virtual", "drone", "nanotech", "cyber"
+            // Abstract Concepts
+            "arcane", "anomaly", "aether", "ambiguity", "ascension", "axiom", "catalyst", "chaos", "chronicle", "cipher",
+            "climax", "conduit", "conundrum", "crescendo", "dissonance", "dogma", "dream", "enigma", "epiphany", "essence",
+            "eternity", "flux", "fortune", "freedom", "genesis", "harmony", "heritage", "illusion", "infinity", "intuition",
+            "legacy", "liberty", "limbo", "lore", "memory", "momentum", "mystery", "myth", "nexus", "oblivion",
+            "oracle", "paradigm", "paradox", "pinnacle", "prophecy", "quantum", "reality", "relic", "reverie", "riddle",
+            "saga", "serendipity", "singularity", "solitude", "stasis", "symbiosis", "synthesis", "syzygy", "talisman", "theory",
+            "thought", "threshold", "transcendence", "truth", "unity", "utopia", "valor", "vector", "velocity", "verdict",
+            "vortex", "whimsy", "wisdom", "zenith",
+
+            // Natural World
+            "abyss", "archipelago", "atoll", "aurora", "avalanche", "basin", "blizzard", "blossom", "boulder", "brook",
+            "caldera", "canopy", "canyon", "cavern", "chasm", "cliff", "cloud", "comet", "constellation", "crater",
+            "crystal", "delta", "desert", "dew", "dune", "eclipse", "ember", "estuary", "evergreen", "fault",
+            "fauna", "fern", "fjord", "flora", "fog", "forest", "fossil", "galaxy", "geode", "geyser",
+            "glacier", "glen", "grove", "gulf", "hail", "harbor", "haven", "heath", "horizon", "hurricane",
+            "iceberg", "inferno", "island", "isthmus", "jungle", "juniper", "lagoon", "lava", "leaf", "lightning",
+            "magma", "mangrove", "meadow", "mesa", "meteor", "mist", "monsoon", "moon", "moss", "mountain",
+            "nebula", "nectar", "nova", "oasis", "ocean", "peak", "peninsula", "petal", "pollen", "prairie",
+            "quasar", "rain", "ravine", "reef", "ridge", "river", "root", "sand", "savanna", "seed",
+            "shard", "shore", "sky", "snow", "spring", "star", "stone", "storm", "strait", "stream",
+            "summit", "sun", "swamp", "taiga", "thicket", "thunder", "tide", "tornado", "tree", "tundra",
+            "typhoon", "undergrowth", "valley", "vine", "volcano", "waterfall", "wave", "wetland", "whirlpool", "willow",
+            "wind", "wood", "zephyr",
+
+            // Man-Made Objects & Structures
+            "abacus", "altar", "amulet", "anchor", "anvil", "aqueduct", "arch", "archive", "armory", "artifact",
+            "automaton", "bastion", "beacon", "bell", "bellows", "book", "bridge", "bunker", "button", "cable",
+            "camera", "candle", "castle", "cathedral", "cauldron", "chisel", "chronometer", "citadel", "clock", "cog",
+            "coin", "colossus", "compass", "crane", "crown", "crucible", "crypt", "dam", "depot", "dial",
+            "dice", "diorama", "dome", "door", "drone", "drum", "dungeon", "dynamo", "engine", "factory",
+            "fang", "feather", "figurine", "filament", "flag", "flute", "forge", "fortress", "foundry", "furnace",
+            "galleon", "gate", "gear", "generator", "gizmo", "gondola", "grimoire", "gyroscope", "hammer", "harp",
+            "helm", "hourglass", "idol", "ink", "instrument", "ivory", "jewel", "journal", "key", "kiln",
+            "knife", "labyrinth", "lamp", "lantern", "lens", "lever", "library", "lighthouse", "lock", "locket",
+            "loom", "lute", "machine", "manuscript", "map", "mask", "mast", "maze", "mechanism", "megalith",
+            "metronome", "microscope", "mill", "mine", "mirror", "monastery", "monocle", "monument", "mosaic", "mural",
+            "museum", "needle", "network", "obelisk", "observatory", "organ", "ornament", "pagoda", "palace", "paper",
+            "pendulum", "pergola", "pillar", "pin", "pipeline", "piston", "pixel", "plow", "pocketwatch", "potion",
+            "press", "pulley", "pump", "puzzle", "quill", "reactor", "refinery", "reservoir", "revolver", "road",
+            "robot", "rope", "rudder", "ruin", "rune", "sarcophagus", "satellite", "scepter", "scroll", "scythe",
+            "seal", "semaphore", "serum", "sewing", "sextant", "shack", "shield", "ship", "shrine", "shuttle",
+            "silo", "skeleton", "spindle", "spire", "spyglass", "staircase", "statue", "steam", "sundial", "sword",
+            "synapse", "tapestry", "telescope", "temple", "throne", "token", "tome", "totem", "tower", "train",
+            "trap", "trebuchet", "trophy", "tunnel", "turbine", "typewriter", "urn", "valve", "vault", "viaduct",
+            "vial", "vinyl", "wagon", "wall", "watch", "weapon", "well", "wheel", "whistle", "winch",
+            "windmill", "window", "wire", "zeppelin",
+
+            // Actions & Adjectives
+            "accelerate", "amplify", "ascend", "awaken", "bellow", "braid", "brittle", "cascade", "chatter", "coalesce",
+            "collapse", "congeal", "conspire", "crackle", "crumble", "crystallize", "dampen", "decay", "decipher", "defy",
+            "delve", "descend", "detonate", "diffuse", "disperse", "dissolve", "distort", "drift", "dwindle", "echo",
+            "eclipse", "elastic", "emboss", "emerge", "empty", "encircle", "engrave", "engulf", "ensnare", "entangle",
+            "ephemeral", "erupt", "evaporate", "excavate", "expand", "explode", "extinguish", "fade", "fathom", "flicker",
+            "float", "flourish", "flow", "fluctuate", "fragment", "freeze", "frozen", "fuse", "gallop", "gargantuan",
+            "gather", "gleam", "glimmer", "glitch", "gnaw", "grind", "grow", "hollow", "hover", "howl",
+            "hum", "hurtle", "ignite", "illuminate", "immerse", "implode", "imprison", "infinite", "inflate", "infuse",
+            "inscribe", "intertwine", "invert", "invoke", "iridescent", "isolate", "jagged", "jolt", "journey", "jump",
+            "juxtapose", "keen", "kindle", "lament", "launch", "levitate", "linger", "liquid", "luminous", "lurch",
+            "magnify", "malleable", "meander", "melt", "merge", "mesmerize", "metamorphose", "migrate", "mimic", "miniature",
+            "mirror", "modulate", "molten", "morph", "muffle", "murmur", "mutate", "muzzle", "navigate", "negotiate",
+            "nestle", "obfuscate", "orbit", "oscillate", "outlast", "overflow", "overload", "overwhelm", "pacify", "paralyze",
+            "penetrate", "perforate", "permeate", "perpetuate", "petrify", "pierce", "plummet", "plunder", "plunge", "prismatic",
+            "proliferate", "pulsate", "pulverize", "puncture", "purify", "quake", "quench", "quiver", "radiate", "rampage",
+            "rattle", "ravel", "rebound", "rebuild", "recede", "reclaim", "reconstruct", "reflect", "refract", "release",
+            "rend", "replicate", "resonate", "resurface", "retreat", "reverberate", "reverse", "revive", "ricochet", "rigid",
+            "ripple", "roam", "rotate", "rupture", "rush", "rustle", "salvage", "saturate", "scatter", "scorch",
+
         ];
 
         // --- Functions ---
