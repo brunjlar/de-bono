@@ -131,11 +131,7 @@
         function updateButtonState() {
             const apiKey = apiKeyInput.value.trim();
             const topic = topicInput.value.trim();
-            if (apiKey && topic) {
-                generateBtn.disabled = false;
-            } else {
-                generateBtn.disabled = true;
-            }
+            generateBtn.disabled = !(apiKey && topic);
         }
 
         /**
@@ -250,44 +246,46 @@
          * Main function to handle the idea generation process.
          */
         async function handleGeneration() {
-            // Button state is already checked before this can be called.
+            // Capture the values needed for the API call *before* clearing the input.
             const apiKey = apiKeyInput.value.trim();
             const topic = topicInput.value.trim();
 
+            // --- Immediate UI Updates ---
+            topicInput.value = '';      // Clear the input field right away.
+            updateButtonState();        // This disables the button since the topic field is now empty.
             hideMessage();
-            generateBtn.disabled = true;
             resultsDiv.innerHTML = '';
             loader.classList.remove('hidden');
 
-            const numberOfIdeas = 3;
-            const ideaTasks = [];
+            try {
+                const numberOfIdeas = 3;
+                const ideaTasks = [];
 
-            for (let i = 0; i < numberOfIdeas; i++) {
-                const randomWords = pickRandomWords(3);
-                ideaTasks.push({
-                    words: randomWords,
-                    promise: generateIdea(topic, randomWords, apiKey)
-                });
-            }
-
-            const generatedIdeas = await Promise.all(ideaTasks.map(p => p.promise));
-
-            loader.classList.add('hidden');
-            updateButtonState(); // Re-check if button should be enabled after generation
-
-            let hasFailedIdeas = false;
-            ideaTasks.forEach((task, index) => {
-                const ideaText = generatedIdeas[index];
-                if (ideaText) {
-                    const ideaCard = createIdeaCard(task.words, ideaText);
-                    resultsDiv.appendChild(ideaCard);
-                } else {
-                    hasFailedIdeas = true;
+                for (let i = 0; i < numberOfIdeas; i++) {
+                    const randomWords = pickRandomWords(3);
+                    ideaTasks.push({
+                        words: randomWords,
+                        promise: generateIdea(topic, randomWords, apiKey) // Use the captured topic.
+                    });
                 }
-            });
 
-            if (hasFailedIdeas) {
-                // The error is already shown by the generateIdea function
+                const generatedIdeas = await Promise.all(ideaTasks.map(p => p.promise));
+
+                // Display results
+                generatedIdeas.forEach((ideaText, index) => {
+                    if (ideaText) {
+                        const task = ideaTasks[index];
+                        const ideaCard = createIdeaCard(task.words, ideaText);
+                        resultsDiv.appendChild(ideaCard);
+                    }
+                });
+
+            } catch (error) {
+                console.error("An unexpected error occurred during generation:", error);
+                showMessage("An unexpected error occurred. Please try again.");
+            } finally {
+                // The only thing left to do in the finally block is to hide the loader.
+                loader.classList.add('hidden');
             }
         }
 
