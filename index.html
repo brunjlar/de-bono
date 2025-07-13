@@ -18,47 +18,47 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        /* Styles for rendered markdown content inside the card */
-        .idea-card-content {
-            width: 100%; /* Ensure content uses full card width */
+        /* Styles for rendered markdown content */
+        .markdown-content {
+            width: 100%;
         }
-        .idea-card-content h1, .idea-card-content h2, .idea-card-content h3 {
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
             font-weight: bold;
             margin-top: 1rem;
             margin-bottom: 0.5rem;
         }
-        .idea-card-content h1 { font-size: 1.5em; }
-        .idea-card-content h2 { font-size: 1.25em; }
-        .idea-card-content h3 { font-size: 1.1em; }
-        .idea-card-content p { margin-bottom: 0.5rem; word-wrap: break-word; }
-        .idea-card-content ul, .idea-card-content ol {
+        .markdown-content h1 { font-size: 1.75em; }
+        .markdown-content h2 { font-size: 1.5em; }
+        .markdown-content h3 { font-size: 1.25em; }
+        .markdown-content p { margin-bottom: 1rem; word-wrap: break-word; }
+        .markdown-content ul, .markdown-content ol {
             list-style-position: inside;
             margin-left: 1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
-        .idea-card-content ul { list-style-type: disc; }
-        .idea-card-content ol { list-style-type: decimal; }
-        .idea-card-content strong { font-weight: bold; }
-        .idea-card-content em { font-style: italic; }
-        /* Styling for code blocks */
-        .idea-card-content pre {
-            background-color: #f3f4f6; /* gray-100 */
-            border-radius: 0.5rem; /* rounded-lg */
+        .markdown-content ul { list-style-type: disc; }
+        .markdown-content ol { list-style-type: decimal; }
+        .markdown-content strong { font-weight: bold; }
+        .markdown-content em { font-style: italic; }
+        .markdown-content pre {
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
             padding: 1rem;
             margin-top: 0.5rem;
             margin-bottom: 1rem;
-            overflow-x: auto; /* Add scrollbar if still needed, but wrap should handle most cases */
+            overflow-x: auto;
         }
-        .idea-card-content code {
+        .markdown-content code {
             font-family: monospace;
-            white-space: pre-wrap;   /* Crucial for wrapping code */
-            word-break: break-all; /* Breaks long strings/words */
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .markdown-content a {
+            color: #4f46e5;
+            text-decoration: underline;
         }
 
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .loader {
             border-right-color: transparent;
             animation: spin 1s linear infinite;
@@ -68,38 +68,24 @@
             border-color: #6ee7b7;
             color: #065f46;
         }
-        /* Style for the disabled button */
         #generateBtn:disabled {
-            background-color: #a5b4fc; /* Lighter indigo */
+            background-color: #a5b4fc;
             cursor: not-allowed;
             transform: none;
         }
-        /* Custom slider styles */
         input[type=range] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 5px;
-            outline: none;
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 8px;
+            background: #e5e7eb; border-radius: 5px; outline: none;
         }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #4f46e5;
-            cursor: pointer;
-            border-radius: 50%;
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px;
+            background: #4f46e5; cursor: pointer; border-radius: 50%;
         }
         input[type=range]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #4f46e5;
-            cursor: pointer;
-            border-radius: 50%;
-            border: none;
+            width: 20px; height: 20px;
+            background: #4f46e5; cursor: pointer; border-radius: 50%; border: none;
         }
     </style>
 </head>
@@ -107,17 +93,19 @@
 
     <div class="container mx-auto px-4 py-8 md:py-12">
         <header class="text-center mb-10">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <div class="text-left">
                     <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Idea Generator</h1>
                     <p class="mt-2 text-lg text-gray-600">Unleash creativity with random word prompts.</p>
                 </div>
-                <!-- API Key Input Section -->
-                <div class="flex-shrink-0 mt-6 md:mt-0 bg-gray-100 p-4 rounded-lg border">
-                    <label for="apiKeyInput" class="text-sm font-semibold text-gray-700 block text-left mb-1">Your Google AI API Key</label>
-                    <div class="flex space-x-2">
-                        <input type="password" id="apiKeyInput" placeholder="Enter & save key" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                        <button id="saveKeyBtn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-700 transition text-sm">Save</button>
+                <div class="flex items-center gap-4">
+                    <button id="aboutBtn" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">About this App</button>
+                    <div class="flex-shrink-0 bg-gray-100 p-4 rounded-lg border">
+                        <label for="apiKeyInput" class="text-sm font-semibold text-gray-700 block text-left mb-1">Your Google AI API Key</label>
+                        <div class="flex space-x-2">
+                            <input type="password" id="apiKeyInput" placeholder="Enter & save key" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <button id="saveKeyBtn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-700 transition text-sm">Save</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,13 +114,10 @@
         <main class="max-w-2xl mx-auto">
             <div class="bg-white p-6 rounded-xl shadow-md">
                 <div class="flex flex-col space-y-6">
-                    <!-- Topic Input Section -->
                     <div class="flex flex-col space-y-2">
                         <label for="topicInput" class="text-lg font-semibold text-gray-700">What do you need ideas for?</label>
                         <input type="text" id="topicInput" placeholder="e.g., a new mobile app, a fantasy story..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                     </div>
-
-                    <!-- Number of Ideas Slider -->
                     <div class="flex flex-col space-y-2">
                         <div class="flex justify-between items-center">
                             <label for="ideasCount" class="text-lg font-semibold text-gray-700">Number of Ideas</label>
@@ -140,11 +125,8 @@
                         </div>
                         <input type="range" id="ideasCount" min="1" max="10" value="3" class="w-full">
                     </div>
-
                     <button id="generateBtn" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all transform hover:scale-105 flex items-center justify-center" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                         Generate Ideas
                     </button>
                 </div>
@@ -157,10 +139,21 @@
 
             <div id="messageBox" class="text-center py-4 px-4 rounded-lg mt-8 hidden"></div>
 
-            <div id="results" class="mt-12 space-y-6">
-                <!-- Generated ideas will be appended here -->
-            </div>
+            <div id="results" class="mt-12 space-y-6"></div>
         </main>
+
+        <footer class="text-center text-sm text-gray-500 mt-16 py-4 border-t">
+            Created by <a href="mailto:brunjlar@gmail.com" class="text-indigo-600 hover:underline">Lars Brünjes</a> |
+            <a href="https://github.com/brunjlar/de-bono" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">View on GitHub</a>
+        </footer>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 relative">
+            <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            <div id="aboutContent" class="markdown-content"></div>
+        </div>
     </div>
 
     <script>
@@ -174,92 +167,55 @@
         const messageBox = document.getElementById('messageBox');
         const ideasCountSlider = document.getElementById('ideasCount');
         const ideasCountValue = document.getElementById('ideasCountValue');
+        const aboutBtn = document.getElementById('aboutBtn');
+        const aboutModal = document.getElementById('aboutModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const aboutContent = document.getElementById('aboutContent');
+
+        // --- About Modal Content ---
+        const aboutMarkdown = `
+# About the AI Idea Generator
+
+This is a simple, powerful web application designed to stimulate creative thinking and generate novel ideas. It uses the "Random Word" lateral thinking technique, popularized by Edward de Bono, and leverages the power of Google's Gemini AI to create unique connections.
+
+## How to Use the App
+
+The application is designed to be intuitive and straightforward:
+
+1.  **Get an API Key**: First, you need a Google AI API key. You can get one for free from the [Google AI Studio](https://aistudio.google.com/app/apikey).
+2.  **Enter Your API Key**: In the top-right corner of the app, paste your Google AI API key into the input field and click "Save". The key will be saved in your browser's local storage for future visits.
+3.  **Enter a Topic**: In the main input field, describe what you need ideas for. This can be anything from "a new flavor of ice cream" to "a plot for a science fiction novel".
+4.  **Choose the Number of Ideas**: Use the slider to select how many ideas you want to generate (from 1 to 10).
+5.  **Generate!**: Once you've entered a key and a topic, the "Generate Ideas" button will become active. Click it to start the process.
+
+## The Theoretical Background: De Bono's Random Word Technique
+
+This tool is a digital implementation of a classic lateral thinking technique developed by **Edward de Bono**, a renowned physician, psychologist, and inventor.
+
+**The Core Problem:** Our brains are brilliant pattern-matching machines. They create fixed pathways of thought based on experience, which is highly efficient for everyday tasks. However, this same efficiency can be a barrier to creativity, as it encourages us to follow the most familiar, logical paths.
+
+**The Solution (Provocation):** De Bono's lateral thinking is about deliberately breaking these patterns. The "Random Word" technique is a simple yet powerful form of **provocation**. Its purpose is to force your brain to make connections where none existed before.
+
+**How It Works:**
+
+1.  **Define Your Focus:** You start with a problem or a topic you want to generate ideas about.
+2.  **Introduce a Random Word:** You then introduce a completely random, unconnected word (e.g., "cloud").
+3.  **Force a Connection:** The creative challenge is to find connections, however tenuous, between your focus and the random word. You might think about the attributes of a "cloud" (soft, floating, data storage, covers everything, changes shape) and see how they could apply to your topic.
+
+By introducing this random input, you jolt your brain out of its comfortable ruts and force it to explore new, previously unconsidered avenues of thought. This app automates that process by using a large wordlist and an AI to handle the "forced connection" part, generating innovative concepts at the click of a button.
+        `;
 
         // --- Word List (Expanded) ---
         const wordList = [
-            // Abstract Concepts
-            "arcane", "anomaly", "aether", "ambiguity", "ascension", "axiom", "catalyst", "chaos", "chronicle", "cipher",
-            "climax", "conduit", "conundrum", "crescendo", "dissonance", "dogma", "dream", "enigma", "epiphany", "essence",
-            "eternity", "flux", "fortune", "freedom", "genesis", "harmony", "heritage", "illusion", "infinity", "intuition",
-            "legacy", "liberty", "limbo", "lore", "memory", "momentum", "mystery", "myth", "nexus", "oblivion",
-            "oracle", "paradigm", "paradox", "pinnacle", "prophecy", "quantum", "reality", "relic", "reverie", "riddle",
-            "saga", "serendipity", "singularity", "solitude", "stasis", "symbiosis", "synthesis", "syzygy", "talisman", "theory",
-            "thought", "threshold", "transcendence", "truth", "unity", "utopia", "valor", "vector", "velocity", "verdict",
-            "vortex", "whimsy", "wisdom", "zenith",
-
-            // Natural World
-            "abyss", "archipelago", "atoll", "aurora", "avalanche", "basin", "blizzard", "blossom", "boulder", "brook",
-            "caldera", "canopy", "canyon", "cavern", "chasm", "cliff", "cloud", "comet", "constellation", "crater",
-            "crystal", "delta", "desert", "dew", "dune", "eclipse", "ember", "estuary", "evergreen", "fault",
-            "fauna", "fern", "fjord", "flora", "fog", "forest", "fossil", "galaxy", "geode", "geyser",
-            "glacier", "glen", "grove", "gulf", "hail", "harbor", "haven", "heath", "horizon", "hurricane",
-            "iceberg", "inferno", "island", "isthmus", "jungle", "juniper", "lagoon", "lava", "leaf", "lightning",
-            "magma", "mangrove", "meadow", "mesa", "meteor", "mist", "monsoon", "moon", "moss", "mountain",
-            "nebula", "nectar", "nova", "oasis", "ocean", "peak", "peninsula", "petal", "pollen", "prairie",
-            "quasar", "rain", "ravine", "reef", "ridge", "river", "root", "sand", "savanna", "seed",
-            "shard", "shore", "sky", "snow", "spring", "star", "stone", "storm", "strait", "stream",
-            "summit", "sun", "swamp", "taiga", "thicket", "thunder", "tide", "tornado", "tree", "tundra",
-            "typhoon", "undergrowth", "valley", "vine", "volcano", "waterfall", "wave", "wetland", "whirlpool", "willow",
-            "wind", "wood", "zephyr",
-
-            // Man-Made Objects & Structures
-            "abacus", "altar", "amulet", "anchor", "anvil", "aqueduct", "arch", "archive", "armory", "artifact",
-            "automaton", "bastion", "beacon", "bell", "bellows", "book", "bridge", "bunker", "button", "cable",
-            "camera", "candle", "castle", "cathedral", "cauldron", "chisel", "chronometer", "citadel", "clock", "cog",
-            "coin", "colossus", "compass", "crane", "crown", "crucible", "crypt", "dam", "depot", "dial",
-            "dice", "diorama", "dome", "door", "drone", "drum", "dungeon", "dynamo", "engine", "factory",
-            "fang", "feather", "figurine", "filament", "flag", "flute", "forge", "fortress", "foundry", "furnace",
-            "galleon", "gate", "gear", "generator", "gizmo", "gondola", "grimoire", "gyroscope", "hammer", "harp",
-            "helm", "hourglass", "idol", "ink", "instrument", "ivory", "jewel", "journal", "key", "kiln",
-            "knife", "labyrinth", "lamp", "lantern", "lens", "lever", "library", "lighthouse", "lock", "locket",
-            "loom", "lute", "machine", "manuscript", "map", "mask", "mast", "maze", "mechanism", "megalith",
-            "metronome", "microscope", "mill", "mine", "mirror", "monastery", "monocle", "monument", "mosaic", "mural",
-            "museum", "needle", "network", "obelisk", "observatory", "organ", "ornament", "pagoda", "palace", "paper",
-            "pendulum", "pergola", "pillar", "pin", "pipeline", "piston", "pixel", "plow", "pocketwatch", "potion",
-            "press", "pulley", "pump", "puzzle", "quill", "reactor", "refinery", "reservoir", "revolver", "road",
-            "robot", "rope", "rudder", "ruin", "rune", "sarcophagus", "satellite", "scepter", "scroll", "scythe",
-            "seal", "semaphore", "serum", "sewing", "sextant", "shack", "shield", "ship", "shrine", "shuttle",
-            "silo", "skeleton", "spindle", "spire", "spyglass", "staircase", "statue", "steam", "sundial", "sword",
-            "synapse", "tapestry", "telescope", "temple", "throne", "token", "tome", "totem", "tower", "train",
-            "trap", "trebuchet", "trophy", "tunnel", "turbine", "typewriter", "urn", "valve", "vault", "viaduct",
-            "vial", "vinyl", "wagon", "wall", "watch", "weapon", "well", "wheel", "whistle", "winch",
-            "windmill", "window", "wire", "zeppelin",
-
-            // Actions & Adjectives
-            "accelerate", "amplify", "ascend", "awaken", "bellow", "braid", "brittle", "cascade", "chatter", "coalesce",
-            "collapse", "congeal", "conspire", "crackle", "crumble", "crystallize", "dampen", "decay", "decipher", "defy",
-            "delve", "descend", "detonate", "diffuse", "disperse", "dissolve", "distort", "drift", "dwindle", "echo",
-            "eclipse", "elastic", "emboss", "emerge", "empty", "encircle", "engrave", "engulf", "ensnare", "entangle",
-            "ephemeral", "erupt", "evaporate", "excavate", "expand", "explode", "extinguish", "fade", "fathom", "flicker",
-            "float", "flourish", "flow", "fluctuate", "fragment", "freeze", "frozen", "fuse", "gallop", "gargantuan",
-            "gather", "gleam", "glimmer", "glitch", "gnaw", "grind", "grow", "hollow", "hover", "howl",
-            "hum", "hurtle", "ignite", "illuminate", "immerse", "implode", "imprison", "infinite", "inflate", "infuse",
-            "inscribe", "intertwine", "invert", "invoke", "iridescent", "isolate", "jagged", "jolt", "journey", "jump",
-            "juxtapose", "keen", "kindle", "lament", "launch", "levitate", "linger", "liquid", "luminous", "lurch",
-            "magnify", "malleable", "meander", "melt", "merge", "mesmerize", "metamorphose", "migrate", "mimic", "miniature",
-            "mirror", "modulate", "molten", "morph", "muffle", "murmur", "mutate", "muzzle", "navigate", "negotiate",
-            "nestle", "obfuscate", "orbit", "oscillate", "outlast", "overflow", "overload", "overwhelm", "pacify", "paralyze",
-            "penetrate", "perforate", "permeate", "perpetuate", "petrify", "pierce", "plummet", "plunder", "plunge", "prismatic",
-            "proliferate", "pulsate", "pulverize", "puncture", "purify", "quake", "quench", "quiver", "radiate", "rampage",
-            "rattle", "ravel", "rebound", "rebuild", "recede", "reclaim", "reconstruct", "reflect", "refract", "release",
-            "rend", "replicate", "resonate", "resurface", "retreat", "reverberate", "reverse", "revive", "ricochet", "rigid",
-            "ripple", "roam", "rotate", "rupture", "rush", "rustle", "salvage", "saturate", "scatter", "scorch",
+            "arcane", "anomaly", "aether", "ambiguity", "ascension", "axiom", "catalyst", "chaos", "chronicle", "cipher", "climax", "conduit", "conundrum", "crescendo", "dissonance", "dogma", "dream", "enigma", "epiphany", "essence", "eternity", "flux", "fortune", "freedom", "genesis", "harmony", "heritage", "illusion", "infinity", "intuition", "legacy", "liberty", "limbo", "lore", "memory", "momentum", "mystery", "myth", "nexus", "oblivion", "oracle", "paradigm", "paradox", "pinnacle", "prophecy", "quantum", "reality", "relic", "reverie", "riddle", "saga", "serendipity", "singularity", "solitude", "stasis", "symbiosis", "synthesis", "syzygy", "talisman", "theory", "thought", "threshold", "transcendence", "truth", "unity", "utopia", "valor", "vector", "velocity", "verdict", "vortex", "whimsy", "wisdom", "zenith", "abyss", "archipelago", "atoll", "aurora", "avalanche", "basin", "blizzard", "blossom", "boulder", "brook", "caldera", "canopy", "canyon", "cavern", "chasm", "cliff", "cloud", "comet", "constellation", "crater", "crystal", "delta", "desert", "dew", "dune", "eclipse", "ember", "estuary", "evergreen", "fault", "fauna", "fern", "fjord", "flora", "fog", "forest", "fossil", "galaxy", "geode", "geyser", "glacier", "glen", "grove", "gulf", "hail", "harbor", "haven", "heath", "horizon", "hurricane", "iceberg", "inferno", "island", "isthmus", "jungle", "juniper", "lagoon", "lava", "leaf", "lightning", "magma", "mangrove", "meadow", "mesa", "meteor", "mist", "monsoon", "moon", "moss", "mountain", "nebula", "nectar", "nova", "oasis", "ocean", "peak", "peninsula", "petal", "pollen", "prairie", "quasar", "rain", "ravine", "reef", "ridge", "river", "root", "sand", "savanna", "seed", "shard", "shore", "sky", "snow", "spring", "star", "stone", "storm", "strait", "stream", "summit", "sun", "swamp", "taiga", "thicket", "thunder", "tide", "tornado", "tree", "tundra", "typhoon", "undergrowth", "valley", "vine", "volcano", "waterfall", "wave", "wetland", "whirlpool", "willow", "wind", "wood", "zephyr", "abacus", "altar", "amulet", "anchor", "anvil", "aqueduct", "arch", "archive", "armory", "artifact", "automaton", "bastion", "beacon", "bell", "bellows", "book", "bridge", "bunker", "button", "cable", "camera", "candle", "castle", "cathedral", "cauldron", "chisel", "chronometer", "citadel", "clock", "cog", "coin", "colossus", "compass", "crane", "crown", "crucible", "crypt", "dam", "depot", "dial", "dice", "diorama", "dome", "door", "drone", "drum", "dungeon", "dynamo", "engine", "factory", "fang", "feather", "figurine", "filament", "flag", "flute", "forge", "fortress", "foundry", "furnace", "galleon", "gate", "gear", "generator", "gizmo", "gondola", "grimoire", "gyroscope", "hammer", "harp", "helm", "hourglass", "idol", "ink", "instrument", "ivory", "jewel", "journal", "key", "kiln", "knife", "labyrinth", "lamp", "lantern", "lens", "lever", "library", "lighthouse", "lock", "locket", "loom", "lute", "machine", "manuscript", "map", "mask", "mast", "maze", "mechanism", "megalith", "metronome", "microscope", "mill", "mine", "mirror", "monastery", "monocle", "monument", "mosaic", "mural", "museum", "needle", "network", "obelisk", "observatory", "organ", "ornament", "pagoda", "palace", "paper", "pendulum", "pergola", "pillar", "pin", "pipeline", "piston", "pixel", "plow", "pocketwatch", "potion", "press", "pulley", "pump", "puzzle", "quill", "reactor", "refinery", "reservoir", "revolver", "road", "robot", "rope", "rudder", "ruin", "rune", "sarcophagus", "satellite", "scepter", "scroll", "scythe", "seal", "semaphore", "serum", "sewing", "sextant", "shack", "shield", "ship", "shrine", "shuttle", "silo", "skeleton", "spindle", "spire", "spyglass", "staircase", "statue", "steam", "sundial", "sword", "synapse", "tapestry", "telescope", "temple", "throne", "token", "tome", "totem", "tower", "train", "trap", "trebuchet", "trophy", "tunnel", "turbine", "typewriter", "urn", "valve", "vault", "viaduct", "vial", "vinyl", "wagon", "wall", "watch", "weapon", "well", "wheel", "whistle", "winch", "windmill", "window", "wire", "zeppelin", "accelerate", "amplify", "ascend", "awaken", "bellow", "braid", "brittle", "cascade", "chatter", "coalesce", "collapse", "congeal", "conspire", "crackle", "crumble", "crystallize", "dampen", "decay", "decipher", "defy", "delve", "descend", "detonate", "diffuse", "disperse", "dissolve", "distort", "drift", "dwindle", "echo", "eclipse", "elastic", "emboss", "emerge", "empty", "encircle", "engrave", "engulf", "ensnare", "entangle", "ephemeral", "erupt", "evaporate", "excavate", "expand", "explode", "extinguish", "fade", "fathom", "flicker", "float", "flourish", "flow", "fluctuate", "fragment", "freeze", "frozen", "fuse", "gallop", "gargantuan", "gather", "gleam", "glimmer", "glitch", "gnaw", "grind", "grow", "hollow", "hover", "howl", "hum", "hurtle", "ignite", "illuminate", "immerse", "implode", "imprison", "infinite", "inflate", "infuse", "inscribe", "intertwine", "invert", "invoke", "iridescent", "isolate", "jagged", "jolt", "journey", "jump", "juxtapose", "keen", "kindle", "lament", "launch", "levitate", "linger", "liquid", "luminous", "lurch", "magnify", "malleable", "meander", "melt", "merge", "mesmerize", "metamorphose", "migrate", "mimic", "miniature", "mirror", "modulate", "molten", "morph", "muffle", "murmur", "mutate", "muzzle", "navigate", "negotiate", "nestle", "obfuscate", "orbit", "oscillate", "outlast", "overflow", "overload", "overwhelm", "pacify", "paralyze", "penetrate", "perforate", "permeate", "perpetuate", "petrify", "pierce", "plummet", "plunder", "plunge", "prismatic", "proliferate", "pulsate", "pulverize", "puncture", "purify", "quake", "quench", "quiver", "radiate", "rampage", "rattle", "ravel", "rebound", "rebuild", "recede", "reclaim", "reconstruct", "reflect", "refract", "release", "rend", "replicate", "resonate", "resurface", "retreat", "reverberate", "reverse", "revive", "ricochet", "rigid", "ripple", "roam", "rotate", "rupture", "rush", "rustle", "salvage", "saturate", "scatter", "scorch",
         ];
 
         // --- Functions ---
-
-        /**
-         * Checks if both API key and topic are filled and updates the button state.
-         */
         function updateButtonState() {
             const apiKey = apiKeyInput.value.trim();
             const topic = topicInput.value.trim();
             generateBtn.disabled = !(apiKey && topic);
         }
-
-        /**
-         * Saves the API key to local storage.
-         */
         function saveApiKey() {
             const key = apiKeyInput.value.trim();
             if (key) {
@@ -270,99 +226,34 @@
                 showMessage("Please enter an API key to save.", 'error');
             }
         }
-
-        /**
-         * Loads the API key from local storage on page load.
-         */
         function loadApiKey() {
             const savedKey = localStorage.getItem('geminiApiKey');
-            if (savedKey) {
-                apiKeyInput.value = savedKey;
-            }
+            if (savedKey) { apiKeyInput.value = savedKey; }
         }
-
-        /**
-         * Picks a specified number of random words from the word list.
-         * @param {number} count - The number of random words to pick.
-         * @returns {string[]} An array of random words.
-         */
         function pickRandomWords(count) {
             const shuffled = wordList.sort(() => 0.5 - Math.random());
             return shuffled.slice(0, count);
         }
-
-        /**
-         * Displays a message to the user.
-         * @param {string} message - The message to display.
-         * @param {'success'|'error'} type - The type of message.
-         */
         function showMessage(message, type = 'error') {
             messageBox.textContent = message;
-            messageBox.className = 'text-center py-4 px-4 rounded-lg mt-8'; // Reset classes
-            if (type === 'success') {
-                messageBox.classList.add('bg-green-100', 'border', 'border-green-400', 'text-green-700');
-            } else {
-                messageBox.classList.add('bg-red-100', 'border', 'border-red-400', 'text-red-700');
-            }
+            messageBox.className = 'text-center py-4 px-4 rounded-lg mt-8';
+            messageBox.classList.add(type === 'success' ? 'bg-green-100' : 'bg-red-100', 'border', type === 'success' ? 'border-green-400' : 'border-red-400', type === 'success' ? 'text-green-700' : 'text-red-700');
             messageBox.classList.remove('hidden');
         }
-
-        /**
-         * Hides the message box.
-         */
-        function hideMessage() {
-            messageBox.classList.add('hidden');
-        }
-
-        /**
-         * Generates a single idea using the Gemini API.
-         * @param {string} topic - The user's topic.
-         * @param {string[]} randomWords - The three random words to use.
-         * @param {string} apiKey - The user's API key.
-         * @returns {Promise<string|null>} The generated idea text, or null on error.
-         */
+        function hideMessage() { messageBox.classList.add('hidden'); }
         async function generateIdea(topic, randomWords, apiKey) {
-            const prompt = `Your task is to generate a creative idea related to "${topic}".
-
-Your inspiration must come from the following three random words: "${randomWords.join(', ')}".
-
-Important: Do not simply force the random words into the idea. Instead, use them as a starting point for free association. Think about the concepts, feelings, attributes, and abstract ideas connected to each word. For example, if a random word is 'river', you might think of 'flow', 'a journey', 'constant change', or 'barriers'.
-
-Use these deeper, abstract connections to spark an innovative and out-of-the-box solution. Present the idea clearly using Markdown for formatting.`;
-
-            const payload = {
-                contents: [{
-                    role: "user",
-                    parts: [{ text: prompt }]
-                }]
-            };
-
+            const prompt = `Your task is to generate a creative idea related to "${topic}".\n\nYour inspiration must come from the following three random words: "${randomWords.join(', ')}".\n\nImportant: Do not simply force the random words into the idea. Instead, use them as a starting point for free association. Think about the concepts, feelings, attributes, and abstract ideas connected to each word. For example, if a random word is 'river', you might think of 'flow', 'a journey', 'constant change', or 'barriers'.\n\nUse these deeper, abstract connections to spark an innovative and out-of-the-box solution. Present the idea clearly using Markdown for formatting.`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const responseText = await response.text();
-
-                if (!response.ok) {
-                    console.error("API Error Response Text:", responseText);
-                    throw new Error(`API request failed with status ${response.status}.`);
-                }
-
+                if (!response.ok) { throw new Error(`API request failed with status ${response.status}.`); }
                 const result = JSON.parse(responseText);
-
-                if (result.candidates && result.candidates.length > 0) {
-                    return result.candidates[0].content.parts[0].text;
-                } else {
+                if (result.candidates && result.candidates.length > 0) { return result.candidates[0].content.parts[0].text; }
+                else {
                     console.error("Unexpected API response structure:", result);
-                    if (result.promptFeedback) {
-                         return `Idea generation blocked. Reason: ${result.promptFeedback.blockReason}`;
-                    }
-                    return "Could not generate an idea. The response was empty.";
+                    return result.promptFeedback ? `Idea generation blocked. Reason: ${result.promptFeedback.blockReason}` : "Could not generate an idea. The response was empty.";
                 }
             } catch (error) {
                 console.error('Error calling Gemini API:', error);
@@ -370,99 +261,62 @@ Use these deeper, abstract connections to spark an innovative and out-of-the-box
                 return null;
             }
         }
-
-        /**
-         * Main function to handle the idea generation process.
-         */
         async function handleGeneration() {
-            // Capture the values needed for the API call *before* clearing the input.
             const apiKey = apiKeyInput.value.trim();
             const topic = topicInput.value.trim();
             const numberOfIdeas = parseInt(ideasCountSlider.value, 10);
-
-            // --- Immediate UI Updates ---
-            topicInput.value = '';      // Clear the input field right away.
-            updateButtonState();        // This disables the button since the topic field is now empty.
-            hideMessage();
-            resultsDiv.innerHTML = '';
+            topicInput.value = ''; updateButtonState();
+            hideMessage(); resultsDiv.innerHTML = '';
             loader.classList.remove('hidden');
-
             try {
-                const ideaTasks = [];
-
-                for (let i = 0; i < numberOfIdeas; i++) {
+                const ideaTasks = Array.from({ length: numberOfIdeas }, () => {
                     const randomWords = pickRandomWords(3);
-                    ideaTasks.push({
-                        words: randomWords,
-                        promise: generateIdea(topic, randomWords, apiKey) // Use the captured topic.
-                    });
-                }
-
+                    return { words: randomWords, promise: generateIdea(topic, randomWords, apiKey) };
+                });
                 const generatedIdeas = await Promise.all(ideaTasks.map(p => p.promise));
-
-                // Display results
                 generatedIdeas.forEach((ideaText, index) => {
                     if (ideaText) {
                         const task = ideaTasks[index];
-                        const ideaCard = createIdeaCard(task.words, ideaText);
-                        resultsDiv.appendChild(ideaCard);
+                        resultsDiv.appendChild(createIdeaCard(task.words, ideaText));
                     }
                 });
-
             } catch (error) {
                 console.error("An unexpected error occurred during generation:", error);
                 showMessage("An unexpected error occurred. Please try again.");
             } finally {
-                // The only thing left to do in the finally block is to hide the loader.
                 loader.classList.add('hidden');
             }
         }
-
-        /**
-         * Creates an HTML element for a single generated idea.
-         * @param {string[]} words - The inspirational words.
-         * @param {string} ideaText - The generated idea text from the AI.
-         * @returns {HTMLElement} The created card element.
-         */
         function createIdeaCard(words, ideaText) {
             const card = document.createElement('div');
             card.className = 'idea-card bg-white p-6 rounded-xl shadow-md border border-gray-200';
-
-            // Use the 'marked' library to parse Markdown into HTML
             const formattedIdea = marked.parse(ideaText.trim());
-
-            card.innerHTML = `
-                <div class="flex flex-wrap items-center mb-4">
-                    ${words.map(word => `<span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${word}</span>`).join('')}
-                </div>
-                <div class="idea-card-content text-gray-700 leading-relaxed">${formattedIdea}</div>
-            `;
+            card.innerHTML = `<div class="flex flex-wrap items-center mb-4">${words.map(word => `<span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${word}</span>`).join('')}</div><div class="markdown-content text-gray-700 leading-relaxed">${formattedIdea}</div>`;
             return card;
         }
 
+        // --- Modal Logic ---
+        function openModal() {
+            aboutContent.innerHTML = marked.parse(aboutMarkdown);
+            aboutModal.classList.remove('hidden');
+            aboutModal.classList.add('flex');
+        }
+        function closeModal() {
+            aboutModal.classList.add('hidden');
+            aboutModal.classList.remove('flex');
+        }
+
         // --- Event Listeners ---
-        document.addEventListener('DOMContentLoaded', () => {
-            loadApiKey();
-            updateButtonState(); // Set initial button state
-        });
+        document.addEventListener('DOMContentLoaded', () => { loadApiKey(); updateButtonState(); });
         saveKeyBtn.addEventListener('click', saveApiKey);
         generateBtn.addEventListener('click', handleGeneration);
-
-        // Add listeners to update button state on input
         apiKeyInput.addEventListener('input', updateButtonState);
         topicInput.addEventListener('input', updateButtonState);
-
-        // Listener for the slider
-        ideasCountSlider.addEventListener('input', (event) => {
-            ideasCountValue.textContent = event.target.value;
-        });
-
-        topicInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter' && !generateBtn.disabled) {
-                handleGeneration();
-            }
-        });
-
+        ideasCountSlider.addEventListener('input', (event) => { ideasCountValue.textContent = event.target.value; });
+        topicInput.addEventListener('keypress', (event) => { if (event.key === 'Enter' && !generateBtn.disabled) { handleGeneration(); } });
+        aboutBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        aboutModal.addEventListener('click', (event) => { if (event.target === aboutModal) { closeModal(); } });
     </script>
 </body>
 </html>
