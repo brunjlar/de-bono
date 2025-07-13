@@ -322,7 +322,13 @@
          * @returns {Promise<string|null>} The generated idea text, or null on error.
          */
         async function generateIdea(topic, randomWords, apiKey) {
-            const prompt = `Please generate a creative idea related to "${topic}" that incorporates the following three random words: "${randomWords.join(', ')}". Use these words as inspiration to come up with an innovative and out-of-the-box solution, concept, or idea. Present the idea clearly and concisely. Use Markdown for formatting like lists or bold text where appropriate.`;
+            const prompt = `Your task is to generate a creative idea related to "${topic}".
+
+Your inspiration must come from the following three random words: "${randomWords.join(', ')}".
+
+Important: Do not simply force the random words into the idea. Instead, use them as a starting point for free association. Think about the concepts, feelings, attributes, and abstract ideas connected to each word. For example, if a random word is 'river', you might think of 'flow', 'a journey', 'constant change', or 'barriers'.
+
+Use these deeper, abstract connections to spark an innovative and out-of-the-box solution. Present the idea clearly using Markdown for formatting.`;
 
             const payload = {
                 contents: [{
